@@ -6,6 +6,7 @@ export const TabsContainer = styled.div`
    overflow: hidden;
    background: #fff;
    height: 100%;
+   width: 100%;
 `;
 
 const TaabButtonContainer = styled.div`
@@ -37,7 +38,7 @@ export const Tab = styled.button`
 `;
 
 export const TabContents = styled.div`
-   border: 0em.25em solid ${(props) => props.theme.primary.main};
+   border: 0.25em solid ${(props) => props.theme.primary.main};
    border-top: 0.5em solid ${(props) => props.theme.primary.main};
    border-top-right-radius: 1em;
    border-bottom-left-radius: 1em;
