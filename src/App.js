@@ -13,7 +13,7 @@ function App() {
          main: "#29b6f6",
          light: "#73e8ff",
          dark: "#0086c3",
-         textColor: "#800",
+         textColor: "#000",
       },
       secondary: {
          main: "#fff",
@@ -35,9 +35,11 @@ function App() {
             </NavItem>
          </NavBar>
          <Main>this is the main compopnets
-           <Dashboard></Dashboard>
+           <Dashboard/>
          </Main>
-         <Footer>This is the footer</Footer>
+         <Footer>
+            Copyright {new Date().getFullYear()} &#169;  Spark Academy
+         </Footer>
       </ThemeProvider>
    );
 }
