@@ -55,7 +55,7 @@ export default function Tabs(props) {
    const [active, setActive] = useState(0);
 
    const handleClick = (event) => {
-      const index = parseInt(event.target.id, 0);
+      const index = parseInt(event.target.id,0);
       if (index !== active) {
          setActive(index);
       }
@@ -65,14 +65,14 @@ export default function Tabs(props) {
       <TabsContainer>
          <TaabButtonContainer>
             {contents.map((content, index) => (
-               <Tab onClick={handleClick} active={active === index} id={index}>
+               <Tab onClick={handleClick} active={active === index} key={index}>
                   {content.title}
                </Tab>
             ))}
          </TaabButtonContainer>
          <TabContents>
             {contents.map((content, index) => (
-               <Content active={active === index}>{content.elements}</Content>
+               <Content active={active === index} key={index} >{content.elements}</Content>
             ))}
          </TabContents>
       </TabsContainer>
