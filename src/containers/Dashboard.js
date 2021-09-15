@@ -1,4 +1,3 @@
-import Spinner from "../componets/Spinner";
 import Tabs from "../componets/Tabs";
 
 export const Dashboard = () => {
@@ -13,3 +12,5 @@ export const Dashboard = () => {
       </>
    );
 };
+
+export default Dashboard;

@@ -1,11 +1,20 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { ThemeProvider } from "styled-components";
 import { BsBookHalf } from "react-icons/bs";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { Main, Footer, Header } from "./componets/layout";
 import { NavBar, NavItem, NavLink } from "./componets/Navbar";
+import Spinner from "./componets/Spinner";
 
-import { Dashboard } from "./containers/Dashboard";
+import { DASHBOARD, CATALOG } from "./shared/routes";
+
+const Dashboard = React.lazy(() => {
+   return import("./containers/Dashboard");
+});
+const NotFound = React.lazy(()=>{
+   return import("./containers/404");
+});
 
 function App() {
    const theme = {
@@ -18,27 +27,38 @@ function App() {
       secondary: {
          main: "#fff",
       },
-      spacing : (factor)=>`${factor * 8}px`
+      spacing: (factor) => `${factor * 8}px`,
    };
+
+   let routes = (
+      <Suspense fallback={<Spinner />}>
+         <Switch>
+            <Route exact path={DASHBOARD} component={Dashboard} />
+            <Route exact path={CATALOG} component={Spinner} />
+            <Route component={NotFound} />
+         </Switch>
+      </Suspense>
+   );
+
    return (
       <ThemeProvider theme={theme}>
          <Header>
             <NavBar>
                <NavItem>
-                  <NavLink href="#">
+                  <NavLink href={CATALOG}>
                      <BsBookHalf></BsBookHalf>
                   </NavLink>
                </NavItem>
                <NavItem>
-                  <NavLink href="#">Catalog</NavLink>
+                  <NavLink href={CATALOG}>Catalog</NavLink>
                </NavItem>
                <NavItem>
-                  <NavLink href="#">Dashboard</NavLink>
+                  <NavLink href={DASHBOARD}>Dashboard</NavLink>
                </NavItem>
             </NavBar>
          </Header>
          <Main>
-            <Dashboard />
+            <Router>{routes}</Router>
          </Main>
          <Footer>
             Copyright {new Date().getFullYear()} &#169; Spark Academy
