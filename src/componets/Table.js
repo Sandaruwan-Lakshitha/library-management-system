@@ -6,6 +6,7 @@ const StyledTable = styled.table`
    td,
    th {
       border: none;
+      padding: 8px;
    }
    td {
       padding: 5px 10px;
@@ -17,6 +18,7 @@ const StyledTable = styled.table`
       :hover {
          background-color: lightpink;
       }
+      
    }
    thead > tr {
       background-color: #c2c2c2;
