@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import Table from "../../componets/Table";
-import { FluidContainer } from "../../componets/CommonComponents";
+import Table from "../../../componets/Table";
+import { FluidContainer } from "../../../componets/CommonComponents";
 
 import Book from "./Book";
 const Books = ({ catalog }) => {
