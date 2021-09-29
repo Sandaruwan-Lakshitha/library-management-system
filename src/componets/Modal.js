@@ -18,7 +18,7 @@ export const DialogBox = styled.div`
    height: auto;
    top: 50%auto;
    left: 50%;
-   transform: 50%;
+   transform: translate(-50%, -50%);
    border-radius: 10px;
    padding: 0.75rem;
    color: rgba(0, 139, 0, 0.7);
