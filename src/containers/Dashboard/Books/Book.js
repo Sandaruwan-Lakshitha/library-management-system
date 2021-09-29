@@ -7,11 +7,11 @@ import {
    Button,
    FlexRow,
    ContainerInline,
-} from "../../componets/CommonComponents";
-import Spinner from "../../componets/Spinner";
+} from "../../../componets/CommonComponents";
+import Spinner from "../../../componets/Spinner";
 
-import { getBook } from "../../api/bookAPI";
-import BookCoverPlaceholder from "../../shared/book_image.png";
+import { getBook } from "../../../api/bookAPI";
+import BookCoverPlaceholder from "../../../shared/book_image.png";
 
 const CotainerInlineTextAlignLeft = styled(ContainerInline)`
    align-items: flex-start;
@@ -45,7 +45,7 @@ function Book({ id, handleBackClick }) {
    }, [id]);
    return (
       <Container>
-         <Button onClick={handleBackClick}>
+         <Button onClick={handleBackClick} size={1.5}>
             <IoReturnUpBack />
          </Button>
          {!isLoading && book != null ? (
@@ -87,7 +87,7 @@ function Book({ id, handleBackClick }) {
                         </Button>
                         <Button
                            danger
-                           onClick={() => console.log("Call lend API")}
+                           onClick={() => console.log("Call Delete API")}
                         >
                            Delete
                         </Button>
