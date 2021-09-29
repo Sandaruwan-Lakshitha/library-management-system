@@ -1,39 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Table from "../../componets/Table";
 import { FluidContainer } from "../../componets/CommonComponents";
 
+import Book from "./Book";
 const Books = ({ catalog }) => {
+   const [selectedBookId, setselectedBookId] = useState(null);
 
-   /*const updateCatalog=[
-      ...catalog,
-      {
-         id: "3",
-         title: "Harry Potter",
-         author: "J. K. Rowling",
-         isAvailable: true,
-         burrowedMemberId: "",
-         burrowedDate: "",
-       },
-       {
-         id: "4",
-         title: "Harry Potter",
-         author: "J. K. Rowling",
-         isAvailable: false,
-         burrowedMemberId: "",
-         burrowedDate: "",
-       }
+   const handleTableRowClick = (id) => {
+      //console.log(id);
+      setselectedBookId(id);
+   };
 
-   ];*/
-
-   const handleTsbleRowClick = (id) =>{
-      console.log(id);
-   }
+   const handleBookViewBackClick = () => {
+      setselectedBookId(null);
+   };
    return (
+      selectedBookId == null ?
       <FluidContainer>
-         {/*catalog[0] ? catalog[0].title : "Still loading"*/}
-         {<Table data={catalog} handleRowClick={handleTsbleRowClick} instruction="Click row to view book"/>}
+         <Table
+            data={catalog}
+            handleRowClick={handleTableRowClick}
+            instruction="Click row to view book"
+         />
       </FluidContainer>
+      : <Book id={selectedBookId} handleBackClick={handleBookViewBackClick}/>
    );
 };
 
