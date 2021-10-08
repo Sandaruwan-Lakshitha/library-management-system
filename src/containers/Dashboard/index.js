@@ -35,7 +35,7 @@ export const Dashboard = () => {
    return isLoading ? (
       <Spinner />
    ) : (
-      book.length > 0 && <Tabs contents={contents} />
+     <Tabs contents={contents} />
    );
 };
 
