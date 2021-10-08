@@ -10,6 +10,7 @@ import {
 } from "../../../componets/CommonComponents";
 import Spinner from "../../../componets/Spinner";
 import ConfirmationDialog from "../../../componets/ConfirmationDialog";
+import LendDialog from "./LendDialog";
 
 import { getBook } from "../../../api/bookAPI";
 import BookCoverPlaceholder from "../../../shared/book_image.png";
@@ -30,12 +31,20 @@ function Book({ id, handleBackClick }) {
    const [isLoading, setIsLoading] = useState(false);
    const [book, setBook] = useState(null);
    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+   const [showLendConfirmation, setShowLendConfirmation] = useState(false);
 
    const handleDelete = (confirmation) => {
       if (confirmation) {
          console.log("Delete confirmed");
       }
       setShowDeleteConfirmation(false);
+   };
+
+   const handleLend = (confirmed,member) =>{
+      if(confirmed){
+         console.log("Book lended to ",member);
+      }
+      setShowLendConfirmation(false);
    };
 
    useEffect(() => {
@@ -93,7 +102,7 @@ function Book({ id, handleBackClick }) {
                   <FlexRow>
                      {book.isAvailable ? (
                         <>
-                           <Button onClick={() => console.log("Call lend API")}>
+                           <Button onClick={() => setShowLendConfirmation(true)}>
                               Lend
                            </Button>
                            <Button
@@ -126,6 +135,7 @@ function Book({ id, handleBackClick }) {
             headerText="Confirm book deletion"
             detailText="Are you sure you wanr to delete this book? This action can't be undone."
          />
+         <LendDialog show={showLendConfirmation} handleClose={handleLend} />
       </>
    );
 }
