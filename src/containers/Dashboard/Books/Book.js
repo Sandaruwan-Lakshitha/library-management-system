@@ -12,8 +12,9 @@ import Spinner from "../../../componets/Spinner";
 import ConfirmationDialog from "../../../componets/ConfirmationDialog";
 import LendDialog from "./LendDialog";
 
-import { getBook } from "../../../api/bookAPI";
+import { getBook, lendBook } from "../../../api/bookAPI";
 import BookCoverPlaceholder from "../../../shared/book_image.png";
+import { getTodayDate } from "../../../shared/utils";
 
 const CotainerInlineTextAlignLeft = styled(ContainerInline)`
    align-items: flex-start;
@@ -40,9 +41,9 @@ function Book({ id, handleBackClick }) {
       setShowDeleteConfirmation(false);
    };
 
-   const handleLend = (confirmed,member) =>{
-      if(confirmed){
-         console.log("Book lended to ",member);
+   const handleLend = (confirmed, memberId) => {
+      if (confirmed) {
+         lendBook(book.id, memberId, getTodayDate());
       }
       setShowLendConfirmation(false);
    };
@@ -102,7 +103,9 @@ function Book({ id, handleBackClick }) {
                   <FlexRow>
                      {book.isAvailable ? (
                         <>
-                           <Button onClick={() => setShowLendConfirmation(true)}>
+                           <Button
+                              onClick={() => setShowLendConfirmation(true)}
+                           >
                               Lend
                            </Button>
                            <Button
