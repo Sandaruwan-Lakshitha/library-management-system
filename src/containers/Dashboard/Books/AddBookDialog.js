@@ -13,9 +13,16 @@ export default function AddBookDialog({ handleClose, show }) {
    const [title, setTitle] = useState("");
    const [author, setAuthor] = useState("");
 
+   const clearInput = () => {
+      setTitle("");
+      setAuthor("");
+   }
+
    const sendDone = () => {
       if (title !== "" && author !== "") {
-         handleClose(true, { title, author });
+         const data = {title,author};
+         clearInput(); 
+         handleClose(true,data);
       } else if (title === "") {
          window.alert("Please enter a title to add");
       } else {
@@ -23,7 +30,10 @@ export default function AddBookDialog({ handleClose, show }) {
       }
    };
 
-   const sendCancel = () => handleClose(false, null);
+   const sendCancel = () => {
+      clearInput();
+      handleClose(false, null); 
+   }; 
 
    return (
       <Modal show={show}>

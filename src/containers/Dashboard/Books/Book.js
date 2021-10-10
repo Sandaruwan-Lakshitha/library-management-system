@@ -151,7 +151,7 @@ function Book({ id, handleBackClick }) {
             handleClose={handleReturn}
             show={showReturnConfirmation}
             headerText="Confirm book return"
-            detailText="Press 'Yes' to return book"
+            detailText="Press 'Yes' to confirm return"
          />
       </>
    );

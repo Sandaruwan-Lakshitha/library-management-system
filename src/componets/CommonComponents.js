@@ -53,7 +53,7 @@ export const Button = styled.button`
    cursor: pointer;
    margin: 1em;
 
-   ${(props) => props.rounded ? 'border-radius: 50%; padding : 0.5em' : "" }
+   ${(props) => props.rounded ? 'border-radius: 100%; padding : 0.5em' : "" }
 
    :hover {
       background-color: ${(props) => {
