@@ -20,7 +20,7 @@ export default  function Input({label,value,onChange,...res}){
     return(
         <Container alignItems="flex-start">
             <Label>{label}</Label>
-            <StyledInput value={value} onChange={onChange} {...rest} />
+            <StyledInput value={value} onChange={onChange} {...res} />
         </Container>
     );
 }
