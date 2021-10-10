@@ -12,7 +12,7 @@ import Spinner from "../../../componets/Spinner";
 import ConfirmationDialog from "../../../componets/ConfirmationDialog";
 import LendDialog from "./LendDialog";
 
-import { getBook, lendBook } from "../../../api/bookAPI";
+import { getBook, lendBook,returnBook } from "../../../api/bookAPI";
 import BookCoverPlaceholder from "../../../shared/book_image.png";
 import { getTodayDate } from "../../../shared/utils";
 
@@ -33,12 +33,16 @@ function Book({ id, handleBackClick }) {
    const [book, setBook] = useState(null);
    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
    const [showLendConfirmation, setShowLendConfirmation] = useState(false);
+   const [showReturnConfirmation, setShowReturnConfirmation] = useState(false);
+
+   const [flag, setFlag] = useState(true);
 
    const handleDelete = (confirmation) => {
       if (confirmation) {
          console.log("Delete confirmed");
       }
       setShowDeleteConfirmation(false);
+      setFlag(false);
    };
 
    const handleLend = (confirmed, memberId) => {
@@ -46,9 +50,19 @@ function Book({ id, handleBackClick }) {
          lendBook(book.id, memberId, getTodayDate());
       }
       setShowLendConfirmation(false);
+      setFlag(false);
+   };
+
+   const handleReturn = (confirmed) => {
+      if(confirmed){
+         returnBook(book.id);
+      }
+      setShowReturnConfirmation(false);
+      setFlag(false); 
    };
 
    useEffect(() => {
+      
       setIsLoading(true);
       getBook(id)
          .then((response) => {
@@ -62,7 +76,8 @@ function Book({ id, handleBackClick }) {
          .finally(() => {
             setIsLoading(false);
          });
-   }, [id]);
+         return () => {};
+   }, [id,flag]);
    return (
       <>
          <Container>
@@ -120,7 +135,7 @@ function Book({ id, handleBackClick }) {
                            <h4>{`Borrowed by : ${book.borrowedMemberId}`}</h4>
                            <h4>{`Borrowed date : ${book.borrowedDate}`}</h4>
                            <Button
-                              onClick={() => console.log("Call return API")}
+                              onClick={() => setShowReturnConfirmation(true)}
                            >
                               Return
                            </Button>
@@ -139,6 +154,12 @@ function Book({ id, handleBackClick }) {
             detailText="Are you sure you wanr to delete this book? This action can't be undone."
          />
          <LendDialog show={showLendConfirmation} handleClose={handleLend} />
+         <ConfirmationDialog
+            handleClose={handleReturn}
+            show={showReturnConfirmation}
+            headerText="Confirm book return"
+            detailText="Press 'Yes' to return book"
+         />
       </>
    );
 }
