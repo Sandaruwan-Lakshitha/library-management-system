@@ -12,7 +12,12 @@ import Spinner from "../../../componets/Spinner";
 import ConfirmationDialog from "../../../componets/ConfirmationDialog";
 import LendDialog from "./LendDialog";
 
-import { getBook, lendBook, returnBook } from "../../../api/bookAPI";
+import {
+   getBook,
+   lendBook,
+   returnBook,
+   deleteBook,
+} from "../../../api/bookAPI";
 import BookCoverPlaceholder from "../../../shared/book_image.png";
 import { getTodayDate } from "../../../shared/utils";
 
@@ -35,10 +40,9 @@ function Book({ id, handleBackClick }) {
    const [showLendConfirmation, setShowLendConfirmation] = useState(false);
    const [showReturnConfirmation, setShowReturnConfirmation] = useState(false);
 
-
    const handleDelete = (confirmation) => {
       if (confirmation) {
-         console.log("Delete confirmed");
+         deleteBook(book.id);
       }
       setShowDeleteConfirmation(false);
    };
@@ -94,7 +98,6 @@ function Book({ id, handleBackClick }) {
                            ""
                         ) : (
                            <>
-                           {console.log(book)}
                               <h4>{`Borrowed by : ${book.burrowedMemberId}`}</h4>
                               <h4>{`Borrowed date : ${book.burrowedDate}`}</h4>
                            </>
