@@ -10,9 +10,16 @@ import {
 } from "../../../componets/CommonComponents";
 import Spinner from "../../../componets/Spinner";
 import ConfirmationDialog from "../../../componets/ConfirmationDialog";
+import LendDialog from "./LendDialog";
 
-import { getBook } from "../../../api/bookAPI";
+import {
+   getBook,
+   lendBook,
+   returnBook,
+   deleteBook,
+} from "../../../api/bookAPI";
 import BookCoverPlaceholder from "../../../shared/book_image.png";
+import { getTodayDate } from "../../../shared/utils";
 
 const CotainerInlineTextAlignLeft = styled(ContainerInline)`
    align-items: flex-start;
@@ -30,12 +37,28 @@ function Book({ id, handleBackClick }) {
    const [isLoading, setIsLoading] = useState(false);
    const [book, setBook] = useState(null);
    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+   const [showLendConfirmation, setShowLendConfirmation] = useState(false);
+   const [showReturnConfirmation, setShowReturnConfirmation] = useState(false);
 
    const handleDelete = (confirmation) => {
       if (confirmation) {
-         console.log("Delete confirmed");
+         deleteBook(book.id);
       }
       setShowDeleteConfirmation(false);
+   };
+
+   const handleLend = (confirmed, memberId) => {
+      if (confirmed) {
+         lendBook(book.id, memberId, getTodayDate());
+      }
+      setShowLendConfirmation(false);
+   };
+
+   const handleReturn = (confirmed) => {
+      if (confirmed) {
+         returnBook(book.id);
+      }
+      setShowReturnConfirmation(false);
    };
 
    useEffect(() => {
@@ -52,6 +75,7 @@ function Book({ id, handleBackClick }) {
          .finally(() => {
             setIsLoading(false);
          });
+      return () => {};
    }, [id]);
    return (
       <>
@@ -74,8 +98,8 @@ function Book({ id, handleBackClick }) {
                            ""
                         ) : (
                            <>
-                              <h4>{`Borrowed by : ${book.borrowedMemberId}`}</h4>
-                              <h4>{`Borrowed date : ${book.borrowedDate}`}</h4>
+                              <h4>{`Borrowed by : ${book.burrowedMemberId}`}</h4>
+                              <h4>{`Borrowed date : ${book.burrowedDate}`}</h4>
                            </>
                         )}
                      </CotainerInlineTextAlignLeft>
@@ -93,7 +117,9 @@ function Book({ id, handleBackClick }) {
                   <FlexRow>
                      {book.isAvailable ? (
                         <>
-                           <Button onClick={() => console.log("Call lend API")}>
+                           <Button
+                              onClick={() => setShowLendConfirmation(true)}
+                           >
                               Lend
                            </Button>
                            <Button
@@ -104,15 +130,9 @@ function Book({ id, handleBackClick }) {
                            </Button>
                         </>
                      ) : (
-                        <>
-                           <h4>{`Borrowed by : ${book.borrowedMemberId}`}</h4>
-                           <h4>{`Borrowed date : ${book.borrowedDate}`}</h4>
-                           <Button
-                              onClick={() => console.log("Call return API")}
-                           >
-                              Return
-                           </Button>
-                        </>
+                        <Button onClick={() => setShowReturnConfirmation(true)}>
+                           Return
+                        </Button>
                      )}
                   </FlexRow>
                </>
@@ -125,6 +145,13 @@ function Book({ id, handleBackClick }) {
             show={showDeleteConfirmation}
             headerText="Confirm book deletion"
             detailText="Are you sure you wanr to delete this book? This action can't be undone."
+         />
+         <LendDialog show={showLendConfirmation} handleClose={handleLend} />
+         <ConfirmationDialog
+            handleClose={handleReturn}
+            show={showReturnConfirmation}
+            headerText="Confirm book return"
+            detailText="Press 'Yes' to confirm return"
          />
       </>
    );

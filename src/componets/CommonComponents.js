@@ -10,9 +10,10 @@ export const FluidContainer = styled.div`
 
 export const Container = styled.div`
    display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: flex-start;
+   flex-direction: ${(props) => props.flexDirection ? props.flexDirection : "column"};
+   justify-content: ${(props) => props.justifyContent ? props.justifyContent : "center"};
+   align-items: ${(props) => props.alignItems ? props.alignItems : "flex-start"};
+   width: ${(props) => props.disableFullWidth ? "initial" : "100%"};
    padding: 1em;
 `;
 
@@ -52,6 +53,8 @@ export const Button = styled.button`
    cursor: pointer;
    margin: 1em;
 
+   ${(props) => props.rounded ? 'border-radius: 100%; padding : 0.5em' : "" }
+
    :hover {
       background-color: ${(props) => {
          switch (props.color) {
@@ -63,5 +66,24 @@ export const Button = styled.button`
                return props.theme.primary.dark;
          }
       }};
+   }
+`;
+
+export const Select = styled.select`
+   height: 35px;
+   background: white;
+   color: gray;
+   padding: 0.5em;
+   font-size: 0.8em;
+   border: 2px solid ${(props)=>props.theme.secondary.light};
+   border-radius: 0.5em;
+   margin-left: 1em;
+   option{
+      color: black;
+      background: white;
+      display: flex;
+      white-space: pre;
+      min-height: 20px;
+      padding: 0px 2px 1px;
    }
 `;
