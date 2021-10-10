@@ -12,7 +12,7 @@ import Spinner from "../../../componets/Spinner";
 import ConfirmationDialog from "../../../componets/ConfirmationDialog";
 import LendDialog from "./LendDialog";
 
-import { getBook, lendBook,returnBook } from "../../../api/bookAPI";
+import { getBook, lendBook, returnBook } from "../../../api/bookAPI";
 import BookCoverPlaceholder from "../../../shared/book_image.png";
 import { getTodayDate } from "../../../shared/utils";
 
@@ -35,14 +35,12 @@ function Book({ id, handleBackClick }) {
    const [showLendConfirmation, setShowLendConfirmation] = useState(false);
    const [showReturnConfirmation, setShowReturnConfirmation] = useState(false);
 
-   const [flag, setFlag] = useState(true);
 
    const handleDelete = (confirmation) => {
       if (confirmation) {
          console.log("Delete confirmed");
       }
       setShowDeleteConfirmation(false);
-      setFlag(false);
    };
 
    const handleLend = (confirmed, memberId) => {
@@ -50,19 +48,16 @@ function Book({ id, handleBackClick }) {
          lendBook(book.id, memberId, getTodayDate());
       }
       setShowLendConfirmation(false);
-      setFlag(false);
    };
 
    const handleReturn = (confirmed) => {
-      if(confirmed){
+      if (confirmed) {
          returnBook(book.id);
       }
       setShowReturnConfirmation(false);
-      setFlag(false); 
    };
 
    useEffect(() => {
-      
       setIsLoading(true);
       getBook(id)
          .then((response) => {
@@ -76,8 +71,8 @@ function Book({ id, handleBackClick }) {
          .finally(() => {
             setIsLoading(false);
          });
-         return () => {};
-   }, [id,flag]);
+      return () => {};
+   }, [id]);
    return (
       <>
          <Container>
@@ -99,8 +94,9 @@ function Book({ id, handleBackClick }) {
                            ""
                         ) : (
                            <>
-                              <h4>{`Borrowed by : ${book.borrowedMemberId}`}</h4>
-                              <h4>{`Borrowed date : ${book.borrowedDate}`}</h4>
+                           {console.log(book)}
+                              <h4>{`Borrowed by : ${book.burrowedMemberId}`}</h4>
+                              <h4>{`Borrowed date : ${book.burrowedDate}`}</h4>
                            </>
                         )}
                      </CotainerInlineTextAlignLeft>
@@ -131,15 +127,9 @@ function Book({ id, handleBackClick }) {
                            </Button>
                         </>
                      ) : (
-                        <>
-                           <h4>{`Borrowed by : ${book.borrowedMemberId}`}</h4>
-                           <h4>{`Borrowed date : ${book.borrowedDate}`}</h4>
-                           <Button
-                              onClick={() => setShowReturnConfirmation(true)}
-                           >
-                              Return
-                           </Button>
-                        </>
+                        <Button onClick={() => setShowReturnConfirmation(true)}>
+                           Return
+                        </Button>
                      )}
                   </FlexRow>
                </>
