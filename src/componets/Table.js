@@ -76,7 +76,8 @@ const TableMarkup = ({ titles, data, handleClick, caption }) => {
 };
 
 const Table = ({ data, handleRowClick, instruction }) => {
-   return data.length>0 ? (
+   //console.log("data=>>>",data);
+   return data ? (
       <TableMarkup
          titles={Object.keys(data[0])}
          data={data}
