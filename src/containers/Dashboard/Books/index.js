@@ -34,12 +34,11 @@ const Books = ({ catalog }) => {
          addBook(data)
          .then((response)=>{
             if(!response.error){
-               console.log(response.data);
                dispatch(addBookToStore(response.data));
             }
          })
          .catch((error)=>{
-            console.log(error);
+            console.log("error",error);
          });
       }
       setShowAddBookDialog(false);

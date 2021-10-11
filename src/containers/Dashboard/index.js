@@ -6,7 +6,7 @@ import Spinner from "../../componets/Spinner";
 
 import Books from "../Dashboard/Books/index";
 
-import {setBooks} from "../../store/booksSlice";
+import { setBooks } from "../../store/booksSlice";
 import { getBooks } from "../../api/bookAPI";
 
 export const Dashboard = () => {
@@ -21,12 +21,11 @@ export const Dashboard = () => {
       getBooks()
          .then((response) => {
             if (!response.error) {
-               console.log(response.data);
                dispatch(setBooks(response.data));
             }
          })
          .catch((error) => {
-            console.log(error);
+            console.log("error",error);
          })
          .finally(() => {
             setIsLoading(false);

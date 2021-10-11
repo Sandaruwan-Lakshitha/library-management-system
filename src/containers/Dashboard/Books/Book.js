@@ -22,7 +22,10 @@ import {
 } from "../../../api/bookAPI";
 import BookCoverPlaceholder from "../../../shared/book_image.png";
 import { getTodayDate } from "../../../shared/utils";
-import { updateBook ,deleteBook as deleteBookStore} from "../../../store/booksSlice";
+import {
+   updateBook,
+   deleteBook as deleteBookStore,
+} from "../../../store/booksSlice";
 
 const CotainerInlineTextAlignLeft = styled(ContainerInline)`
    align-items: flex-start;
@@ -49,18 +52,17 @@ function Book({ id, handleBackClick }) {
       if (confirmation) {
          setIsLoading(true);
          deleteBook(book.id)
-         .then((response)=>{
-            if(!response.error){
-               console.log("delete >>>",response.data);
-               dispatch(deleteBookStore(response.data));
-            }
-         })
-         .catch((error)=>{
-            console.log(error);
-         })
-         .finally(()=>{
-            setIsLoading(false);
-         });
+            .then((response) => {
+               if (!response.error) {
+                  dispatch(deleteBookStore(response.data));
+               }
+            })
+            .catch((error) => {
+               console.log("error",error);
+            })
+            .finally(() => {
+               setIsLoading(false);
+            });
       }
       setShowDeleteConfirmation(false);
    };
@@ -71,7 +73,6 @@ function Book({ id, handleBackClick }) {
          lendBook(book.id, memberId, getTodayDate())
             .then((response) => {
                if (!response.error) {
-                  console.log(response.data);
                   dispatch(updateBook(response.data));
                }
             })
@@ -95,7 +96,7 @@ function Book({ id, handleBackClick }) {
                }
             })
             .catch((error) => {
-               console.log(error);
+               console.log("error",error);
             })
             .finally(() => {
                setIsLoading(false);
