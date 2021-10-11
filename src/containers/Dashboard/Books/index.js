@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-
 import { IoAddSharp } from "react-icons/io5";
+import { useDispatch } from "react-redux";
 
 import Table from "../../../componets/Table";
 import {
@@ -13,10 +13,13 @@ import Book from "./Book";
 import AddBookDialog from "./AddBookDialog";
 
 import { addBook } from "../../../api/bookAPI";
+import { addBook as addBookToStore } from "../../../store/booksSlice";
 
 const Books = ({ catalog }) => {
    const [selectedBookId, setselectedBookId] = useState(null);
    const [showAddBookDialog, setShowAddBookDialog] = useState(false);
+
+   const dispatch = useDispatch();
 
    const handleTableRowClick = (id) => {
       setselectedBookId(id);
@@ -28,7 +31,16 @@ const Books = ({ catalog }) => {
 
    const handleAddBook = (confirmed, data) => {
       if (confirmed) {
-         addBook(data);
+         addBook(data)
+         .then((response)=>{
+            if(!response.error){
+               console.log(response.data);
+               dispatch(addBookToStore(response.data));
+            }
+         })
+         .catch((error)=>{
+            console.log(error);
+         });
       }
       setShowAddBookDialog(false);
    };

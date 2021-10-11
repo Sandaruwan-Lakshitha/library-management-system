@@ -22,7 +22,7 @@ import {
 } from "../../../api/bookAPI";
 import BookCoverPlaceholder from "../../../shared/book_image.png";
 import { getTodayDate } from "../../../shared/utils";
-import { updateBook } from "../../../store/booksSlice";
+import { updateBook ,deleteBook as deleteBookStore} from "../../../store/booksSlice";
 
 const CotainerInlineTextAlignLeft = styled(ContainerInline)`
    align-items: flex-start;
@@ -47,7 +47,20 @@ function Book({ id, handleBackClick }) {
 
    const handleDelete = (confirmation) => {
       if (confirmation) {
-         deleteBook(book.id);
+         setIsLoading(true);
+         deleteBook(book.id)
+         .then((response)=>{
+            if(!response.error){
+               console.log("delete >>>",response.data);
+               dispatch(deleteBookStore(response.data));
+            }
+         })
+         .catch((error)=>{
+            console.log(error);
+         })
+         .finally(()=>{
+            setIsLoading(false);
+         });
       }
       setShowDeleteConfirmation(false);
    };
@@ -74,7 +87,19 @@ function Book({ id, handleBackClick }) {
 
    const handleReturn = (confirmed) => {
       if (confirmed) {
-         returnBook(book.id);
+         setIsLoading(true);
+         returnBook(book.id)
+            .then((response) => {
+               if (!response.error) {
+                  dispatch(updateBook(response.data));
+               }
+            })
+            .catch((error) => {
+               console.log(error);
+            })
+            .finally(() => {
+               setIsLoading(false);
+            });
       }
       setShowReturnConfirmation(false);
    };
