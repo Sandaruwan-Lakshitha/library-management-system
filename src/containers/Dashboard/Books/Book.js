@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { IoReturnUpBack } from "react-icons/io5";
 import styled from "styled-components";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
    Container,
@@ -14,12 +14,7 @@ import Spinner from "../../../componets/Spinner";
 import ConfirmationDialog from "../../../componets/ConfirmationDialog";
 import LendDialog from "./LendDialog";
 
-import {
-   getBook,
-   lendBook,
-   returnBook,
-   deleteBook,
-} from "../../../api/bookAPI";
+import { lendBook, returnBook, deleteBook } from "../../../api/bookAPI";
 import BookCoverPlaceholder from "../../../shared/book_image.png";
 import { getTodayDate } from "../../../shared/utils";
 import {
@@ -41,10 +36,13 @@ const H2 = styled.h2`
 
 function Book({ id, handleBackClick }) {
    const [isLoading, setIsLoading] = useState(false);
-   const [book, setBook] = useState(null);
+
    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
    const [showLendConfirmation, setShowLendConfirmation] = useState(false);
    const [showReturnConfirmation, setShowReturnConfirmation] = useState(false);
+
+   const books = useSelector((state) => state.books.value);
+   const book = books.find((element) => element.id === id);
 
    const dispatch = useDispatch();
 
@@ -55,10 +53,11 @@ function Book({ id, handleBackClick }) {
             .then((response) => {
                if (!response.error) {
                   dispatch(deleteBookStore(response.data));
+                  handleBackClick();
                }
             })
             .catch((error) => {
-               console.log("error",error);
+               console.log("error", error);
             })
             .finally(() => {
                setIsLoading(false);
@@ -96,7 +95,7 @@ function Book({ id, handleBackClick }) {
                }
             })
             .catch((error) => {
-               console.log("error",error);
+               console.log("error", error);
             })
             .finally(() => {
                setIsLoading(false);
@@ -105,22 +104,6 @@ function Book({ id, handleBackClick }) {
       setShowReturnConfirmation(false);
    };
 
-   useEffect(() => {
-      setIsLoading(true);
-      getBook(id)
-         .then((response) => {
-            if (response.data) {
-               setBook(response.data);
-            }
-         })
-         .catch((error) => {
-            console.log("error", error);
-         })
-         .finally(() => {
-            setIsLoading(false);
-         });
-      return () => {};
-   }, [id]);
    return (
       <>
          <Container>

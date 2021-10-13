@@ -11,9 +11,8 @@ import { getBooks } from "../../api/bookAPI";
 
 export const Dashboard = () => {
    const [isLoading, setIsLoading] = useState(false);
-   //const [book, setBook] = useState([]);
 
-   const booksFromRedux = useSelector((state) => state.books.value);
+   const books = useSelector((state) => state.books.value);
    const dispatch = useDispatch();
 
    useEffect(() => {
@@ -33,7 +32,7 @@ export const Dashboard = () => {
    }, [dispatch]);
 
    const contents = [
-      { title: "Books", elements: <Books catalog={booksFromRedux} /> },
+      { title: "Books", elements: <Books catalog={books} /> },
       { title: "Members", elements: <h1>Conetct of members go here</h1> },
    ];
 
