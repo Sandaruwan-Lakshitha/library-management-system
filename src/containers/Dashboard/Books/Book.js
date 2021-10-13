@@ -58,9 +58,6 @@ function Book({ id, handleBackClick }) {
             })
             .catch((error) => {
                console.log("error", error);
-            })
-            .finally(() => {
-               setIsLoading(false);
             });
       }
       setShowDeleteConfirmation(false);
