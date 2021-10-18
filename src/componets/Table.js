@@ -4,6 +4,7 @@ import { capitalizeFirstLetter } from "../shared/utils";
 const StyledTable = styled.table`
    border: none;
    border-collapse: separate;
+   caption-side: top;
    td,
    th {
       border: 1px solid;
@@ -32,6 +33,7 @@ const StyledTable = styled.table`
       font-size: 0.9em;
       padding: ${(props) => props.theme.spacing(1)};
       font-weight: bold;
+      text-align: center;
 
    }
 `;
