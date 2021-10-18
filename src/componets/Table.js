@@ -76,6 +76,7 @@ const TableMarkup = ({ titles, data, handleClick, caption }) => {
 };
 
 const Table = ({ data, handleRowClick, instruction }) => {
+   console.log("data from book>>",data);
    return data ? (
       <TableMarkup
          titles={Object.keys(data[0])}

@@ -32,14 +32,14 @@ const Books = ({ catalog }) => {
    const handleAddBook = (confirmed, data) => {
       if (confirmed) {
          addBook(data)
-         .then((response)=>{
-            if(!response.error){
-               dispatch(addBookToStore(response.data));
-            }
-         })
-         .catch((error)=>{
-            console.log("error",error);
-         });
+            .then((response) => {
+               if (!response.error) {
+                  dispatch(addBookToStore(response.data));
+               }
+            })
+            .catch((error) => {
+               console.log("error", error);
+            });
       }
       setShowAddBookDialog(false);
    };
@@ -53,7 +53,7 @@ const Books = ({ catalog }) => {
                alignItems="flex-start"
             >
                <Button rounded onClick={() => setShowAddBookDialog(true)}>
-                  <IoAddSharp/>
+                  <IoAddSharp />
                </Button>
             </Container>
             <Table
