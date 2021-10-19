@@ -22,6 +22,7 @@ const StyledTable = styled.table`
    }
    thead > tr {
       background-color: ${(props) => props.theme.primary.main};
+      text-align: center;
    }
    tr > th {
       padding: 0.25em 0.5em;
@@ -34,7 +35,6 @@ const StyledTable = styled.table`
       padding: ${(props) => props.theme.spacing(1)};
       font-weight: bold;
       text-align: center;
-
    }
 `;
 
@@ -78,7 +78,6 @@ const TableMarkup = ({ titles, data, handleClick, caption }) => {
 };
 
 const Table = ({ data, handleRowClick, instruction }) => {
-   console.log("data from book>>",data);
    return data ? (
       <TableMarkup
          titles={Object.keys(data[0])}

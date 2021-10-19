@@ -16,17 +16,17 @@ import { addBook } from "../../../api/bookAPI";
 import { addBook as addBookToStore } from "../../../store/booksSlice";
 
 const Books = ({ catalog }) => {
-   const [selectedBookId, setselectedBookId] = useState(null);
+   const [selectedBookId, setSelectedBookId] = useState(null);
    const [showAddBookDialog, setShowAddBookDialog] = useState(false);
 
    const dispatch = useDispatch();
 
    const handleTableRowClick = (id) => {
-      setselectedBookId(id);
+      setSelectedBookId(id);
    };
 
    const handleBookViewBackClick = () => {
-      setselectedBookId(null);
+      setSelectedBookId(null);
    };
 
    const handleAddBook = (confirmed, data) => {

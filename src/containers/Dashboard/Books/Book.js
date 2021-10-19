@@ -63,7 +63,7 @@ function Book({ id, handleBackClick }) {
                }
             })
             .catch((error) => {
-               console.log("error", error);
+               console.log(error);
             });
       }
       setShowDeleteConfirmation(false);

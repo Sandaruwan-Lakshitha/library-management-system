@@ -5,14 +5,19 @@ import Tabs from "../../componets/Tabs";
 import Spinner from "../../componets/Spinner";
 
 import Books from "../Dashboard/Books/index";
+import Members from "../Dashboard/Members/index";
 
 import { setBooks } from "../../store/booksSlice";
+import { setMembers } from "../../store/memberSlice";
+
 import { getBooks } from "../../api/bookAPI";
+import { getMembers } from "../../api/memberAPI";
 
 export const Dashboard = () => {
    const [isLoading, setIsLoading] = useState(false);
 
    const books = useSelector((state) => state.books.value);
+   const members = useSelector((state) => state.members.value);
    const dispatch = useDispatch();
 
    useEffect(() => {
@@ -24,7 +29,16 @@ export const Dashboard = () => {
             }
          })
          .catch((error) => {
-            console.log("error",error);
+            console.log( error);
+         });
+      getMembers()
+         .then((response) => {
+            if (!response.error) {
+               dispatch(setMembers(response.data));
+            }
+         })
+         .catch((error) => {
+            console.log( error);
          })
          .finally(() => {
             setIsLoading(false);
@@ -33,7 +47,7 @@ export const Dashboard = () => {
 
    const contents = [
       { title: "Books", elements: <Books catalog={books} /> },
-      { title: "Members", elements: <h1>Conetct of members go here</h1> },
+      { title: "Members", elements: <Members catalog={members} /> },
    ];
 
    return isLoading ? <Spinner /> : <Tabs contents={contents} />;
