@@ -48,7 +48,11 @@ function Book({ id, handleBackClick }) {
    const [showEditBookDialog, setShowEditBookDialog] = useState(false);
 
    const books = useSelector((state) => state.books.value);
+   const members = useSelector((state) => state.members.value);
    const book = books.find((element) => element.id === id);
+   const member = book
+      ? members.find((element) => element.id === book.burrowedMemberId)
+      : null;
 
    const dispatch = useDispatch();
 
@@ -147,7 +151,7 @@ function Book({ id, handleBackClick }) {
                            ""
                         ) : (
                            <>
-                              <h4>{`Borrowed by : ${book.burrowedMemberId}`}</h4>
+                              <h4>{`Borrowed by : ${member.firstName+" "+member.middleName+" "+member.lastName}`}</h4>
                               <h4>{`Borrowed date : ${book.burrowedDate}`}</h4>
                            </>
                         )}
