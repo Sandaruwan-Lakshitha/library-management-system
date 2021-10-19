@@ -61,7 +61,6 @@ export default function Tabs(props) {
          setActive(index);
       }
    };
-
    return (
       <TabsContainer>
          <TaabButtonContainer>

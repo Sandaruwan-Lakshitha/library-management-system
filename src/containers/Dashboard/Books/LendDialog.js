@@ -22,8 +22,15 @@ const LendDialog = ({ handleClose, show }) => {
 
    useEffect(() => {
       setIsLoading(true);
-      const responce = getMembers();
-      setMembers(responce);
+      getMembers()
+      .then((response)=>{
+         if(!response.error){
+            setMembers(response.data);
+         }
+      })
+      .catch((error)=>{
+         console.log(error);
+      });
       setIsLoading(false);
    }, []);
 
@@ -43,7 +50,7 @@ const LendDialog = ({ handleClose, show }) => {
                      {members.map((member, index) => {
                         return (
                            <option key={index} value={member.id}>
-                              {member.name}
+                              {member.firstName}
                            </option>
                         );
                      })}

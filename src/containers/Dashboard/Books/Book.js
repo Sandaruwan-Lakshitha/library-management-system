@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { IoReturnUpBack } from "react-icons/io5";
 import styled from "styled-components";
+
+import { useDispatch, useSelector } from "react-redux";
 
 import {
    Container,
@@ -11,15 +13,20 @@ import {
 import Spinner from "../../../componets/Spinner";
 import ConfirmationDialog from "../../../componets/ConfirmationDialog";
 import LendDialog from "./LendDialog";
+import AddEditBookDialog from "./AddEditBookDialog";
 
 import {
-   getBook,
    lendBook,
    returnBook,
    deleteBook,
+   editBook,
 } from "../../../api/bookAPI";
 import BookCoverPlaceholder from "../../../shared/book_image.png";
 import { getTodayDate } from "../../../shared/utils";
+import {
+   updateBook,
+   deleteBook as deleteBookStore,
+} from "../../../store/booksSlice";
 
 const CotainerInlineTextAlignLeft = styled(ContainerInline)`
    align-items: flex-start;
@@ -35,48 +42,94 @@ const H2 = styled.h2`
 
 function Book({ id, handleBackClick }) {
    const [isLoading, setIsLoading] = useState(false);
-   const [book, setBook] = useState(null);
    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
    const [showLendConfirmation, setShowLendConfirmation] = useState(false);
    const [showReturnConfirmation, setShowReturnConfirmation] = useState(false);
+   const [showEditBookDialog, setShowEditBookDialog] = useState(false);
+
+   const books = useSelector((state) => state.books.value);
+   const members = useSelector((state) => state.members.value);
+   const book = books.find((element) => element.id === id);
+   const member = book
+      ? members.find((element) => element.id === book.burrowedMemberId)
+      : null;
+
+   const dispatch = useDispatch();
 
    const handleDelete = (confirmation) => {
       if (confirmation) {
-         deleteBook(book.id);
+         setIsLoading(true);
+         deleteBook(book.id)
+            .then((response) => {
+               if (!response.error) {
+                  dispatch(deleteBookStore(response.data));
+                  handleBackClick();
+               }
+            })
+            .catch((error) => {
+               console.log(error);
+            });
       }
       setShowDeleteConfirmation(false);
    };
 
    const handleLend = (confirmed, memberId) => {
       if (confirmed) {
-         lendBook(book.id, memberId, getTodayDate());
+         setIsLoading(true);
+         lendBook(book.id, memberId, getTodayDate())
+            .then((response) => {
+               if (!response.error) {
+                  dispatch(updateBook(response.data));
+               }
+            })
+            .catch((error) => {
+               console.log("error", error);
+            })
+            .finally(() => {
+               setIsLoading(false);
+            });
       }
       setShowLendConfirmation(false);
    };
 
    const handleReturn = (confirmed) => {
       if (confirmed) {
-         returnBook(book.id);
+         setIsLoading(true);
+         returnBook(book.id)
+            .then((response) => {
+               if (!response.error) {
+                  dispatch(updateBook(response.data));
+               }
+            })
+            .catch((error) => {
+               console.log("error", error);
+            })
+            .finally(() => {
+               setIsLoading(false);
+            });
       }
       setShowReturnConfirmation(false);
    };
 
-   useEffect(() => {
-      setIsLoading(true);
-      getBook(id)
-         .then((response) => {
-            if (response.data) {
-               setBook(response.data);
-            }
-         })
-         .catch((error) => {
-            console.log("error", error);
-         })
-         .finally(() => {
-            setIsLoading(false);
-         });
-      return () => {};
-   }, [id]);
+   const handleEdit = (confirmed, data) => {
+      if (confirmed) {
+         setIsLoading(true);
+         editBook(book.id, data)
+            .then((response) => {
+               if (!response.error) {
+                  dispatch(updateBook(response.data));
+               }
+            })
+            .catch((error) => {
+               console.log(error);
+            })
+            .finally(() => {
+               setIsLoading(false);
+            });
+      }
+      setShowEditBookDialog(false);
+   };
+
    return (
       <>
          <Container>
@@ -98,7 +151,7 @@ function Book({ id, handleBackClick }) {
                            ""
                         ) : (
                            <>
-                              <h4>{`Borrowed by : ${book.burrowedMemberId}`}</h4>
+                              <h4>{`Borrowed by : ${member.firstName+" "+member.middleName+" "+member.lastName}`}</h4>
                               <h4>{`Borrowed date : ${book.burrowedDate}`}</h4>
                            </>
                         )}
@@ -121,6 +174,9 @@ function Book({ id, handleBackClick }) {
                               onClick={() => setShowLendConfirmation(true)}
                            >
                               Lend
+                           </Button>
+                           <Button onClick={() => setShowEditBookDialog(true)}>
+                              Edit
                            </Button>
                            <Button
                               color="danger"
@@ -152,6 +208,12 @@ function Book({ id, handleBackClick }) {
             show={showReturnConfirmation}
             headerText="Confirm book return"
             detailText="Press 'Yes' to confirm return"
+         />
+         <AddEditBookDialog
+            isEdit={true}
+            show={showEditBookDialog}
+            handleClose={handleEdit}
+            data={book}
          />
       </>
    );

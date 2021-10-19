@@ -4,6 +4,7 @@ import { capitalizeFirstLetter } from "../shared/utils";
 const StyledTable = styled.table`
    border: none;
    border-collapse: separate;
+   caption-side: top;
    td,
    th {
       border: 1px solid;
@@ -21,6 +22,7 @@ const StyledTable = styled.table`
    }
    thead > tr {
       background-color: ${(props) => props.theme.primary.main};
+      text-align: center;
    }
    tr > th {
       padding: 0.25em 0.5em;
@@ -32,7 +34,7 @@ const StyledTable = styled.table`
       font-size: 0.9em;
       padding: ${(props) => props.theme.spacing(1)};
       font-weight: bold;
-
+      text-align: center;
    }
 `;
 
@@ -76,7 +78,7 @@ const TableMarkup = ({ titles, data, handleClick, caption }) => {
 };
 
 const Table = ({ data, handleRowClick, instruction }) => {
-   return data.length>0 ? (
+   return data && data.length>0 ? (
       <TableMarkup
          titles={Object.keys(data[0])}
          data={data}
