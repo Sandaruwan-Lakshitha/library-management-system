@@ -9,6 +9,7 @@ const Body = styled.div`
    height: 560px;
    border-radius: 10px;
    margin: 20px;
+   padding: 10px;
    :hover {
       box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
    }
