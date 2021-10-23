@@ -16,6 +16,9 @@ const NotFound = React.lazy(()=>{
    return import("./containers/404");
 });
 
+const Catalog = React.lazy(()=>{
+   return import("./containers/Catalog/index")
+});
 function App() {
    const theme = {
       primary: {
@@ -41,7 +44,7 @@ function App() {
          <Switch>
             <Route exact path="/" component={Dashboard} />
             <Route exact path={DASHBOARD} component={Dashboard} />
-            <Route exact path={CATALOG} component={Spinner} />
+            <Route exact path={CATALOG} component={Catalog} />
             <Route component={NotFound} />
          </Switch>
       </Suspense>

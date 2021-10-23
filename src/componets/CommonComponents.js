@@ -22,7 +22,7 @@ export const ContainerInline = styled.div`
    display: inline-flex;
    flex-direction: column;
    justify-content: center;
-   align-items: flex-start;
+   align-items: flex-end;
    padding: 1em;
    text-align: left;
 `;
