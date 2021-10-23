@@ -85,8 +85,10 @@ export default function AddMemberDialog({
          );
       } else if (address === "") {
          window.alert(`Please enter a address to ${isEdit ? "edit" : "add"}.`);
-      }else{
-            window.alert(`Please select a user type to ${isEdit ? "edit" : "add"}.`);
+      } else {
+         window.alert(
+            `Please select a user type to ${isEdit ? "edit" : "add"}.`
+         );
       }
    };
 

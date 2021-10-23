@@ -34,7 +34,7 @@ const H4 = styled.h4`
 function Member({ id, handleBackClick }) {
    const [isLoading, setIsLoading] = useState(false);
    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-   const [showEditBookDialog, setShowEditBookDialog] = useState(false);
+   const [showEditMemberDialog, setShowEditMemberDialog] = useState(false);
 
    const books = useSelector((state) => state.books.value);
    const members = useSelector((state) => state.members.value);
@@ -75,7 +75,7 @@ function Member({ id, handleBackClick }) {
             });
          setIsLoading(false);
       }
-      setShowEditBookDialog(false);
+      setShowEditMemberDialog(false);
    };
 
    return (
@@ -149,7 +149,7 @@ function Member({ id, handleBackClick }) {
                   </FlexRow>
                   <FlexRow>
                      <>
-                        <Button onClick={() => setShowEditBookDialog(true)}>
+                        <Button onClick={() => setShowEditMemberDialog(true)}>
                            Edit
                         </Button>
                         {!book ? (
@@ -177,7 +177,7 @@ function Member({ id, handleBackClick }) {
          />
          <AddEditMemberDialog
             isEdit={true}
-            show={showEditBookDialog}
+            show={showEditMemberDialog}
             handleClose={handleEdit}
             data={member}
          />
