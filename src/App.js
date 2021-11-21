@@ -67,6 +67,7 @@ function App() {
                </NavItem>
             </NavBar>
          </Header>
+         {Catalog && <Header></Header>}
          <Main>
             <Router>{routes}</Router>
          </Main>

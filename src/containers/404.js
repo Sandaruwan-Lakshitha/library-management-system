@@ -19,7 +19,7 @@ const NotFound = () => {
             </Title>
             <br />
             <Subtitle>
-                The page yot are lookin for doesn't exist.
+                The page yot are looking for doesn't exist.
             </Subtitle>
         </FluidContainer>
      );
