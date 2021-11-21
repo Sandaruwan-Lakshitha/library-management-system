@@ -47,10 +47,10 @@ const LendDialog = ({ handleClose, show }) => {
                      value={member}
                   >
                      <option value="">--Please select a member--</option>
-                     {members.map((member, index) => {
+                     {members.map((member1, index) => {
                         return (
-                           <option key={index} value={member.id}>
-                              {member.firstName}
+                           <option key={index} value={member1.id}>
+                              {member1.firstName}
                            </option>
                         );
                      })}
