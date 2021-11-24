@@ -173,7 +173,7 @@ function Member({ id, handleBackClick }) {
             handleClose={handleDelete}
             show={showDeleteConfirmation}
             headerText="Confirm member deletion"
-            detailText="Are you sure you wanr to delete this member? This action can't be undone."
+            detailText="Are you sure you want to delete this member? This action can't be undone."
          />
          <AddEditMemberDialog
             isEdit={true}
